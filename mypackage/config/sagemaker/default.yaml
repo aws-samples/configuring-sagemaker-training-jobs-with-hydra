@@ -1,0 +1,35 @@
+repo_name: "hydra-sm-artifact"
+image_tag: "latest"
+role_arn: <YOUR-SAGEMAKER-EXECUTION-ROLE>
+instance_type: "ml.m5.large"
+instance_count: 1
+volume_size_in_gb: 10
+max_runtime_in_seconds: 600
+config_s3_bucket: <YOUR-CONFIG-BUCKET>
+config_s3_prefix: hydra-on-sm/training-configs
+input_data_s3_path: <YOUR-INPUT-DATA-URI>
+output_data_s3_path: <YOUR-OUTPUT-DATA-URI>
+hyper_parameter_optimization:
+  strategy: "Random"
+  objective:
+    type: "Minimize"
+    metric_name: "MAE"
+  resource_limits:
+    max_number_ob_training_jobs: 2
+    max_parallel_training_jobs: 2
+  parameter_ranges:
+    input_parameter_ranges:
+      - Name: "model.max_leaf_nodes"
+        MinValue: "10"
+        MaxValue: "200"
+        ScalingType: "Auto"
+  training_job_early_stopping_type: "Auto"
+  tuning_job_completion_criteria:
+    target_objective_metric_value: 0.1
+  algorithm_specification:
+    training_input_mode: "File"
+    metric_definitions:
+      - Name: "MAE"
+        Regex: "MAE=([0-9\\.]+)"
+      - Name: "MAS"
+        Regex: "MSE=([0-9\\.]+)"

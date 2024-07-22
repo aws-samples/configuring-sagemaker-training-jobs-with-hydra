@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyd
+*.pyo
+*.egg-info/
+*.egg
+*.log
+.Python
+*.python-version
+
+# Virtual environments
+.venv/
+ENV/
+env/
+.virtual_documents/
+
+# Spyder project settings
+.spyderproject
+.spyproject
+
+# Jupyter
+.ipynb_checkpoints/
+
+# IDE/Editor
+.vscode/
+.idea/
+*.code-workspace
+
+# OS generated
+.DS_Store
+Thumbs.db
+
+# data
+*.xlsx
+*.xls
+*.csv
+*outputs
+*multirun
+*data
+
+# config
+.env

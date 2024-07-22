@@ -1,0 +1,8 @@
+global_parameter: "hello from the global parameter"
+
+defaults:
+  - _self_
+  - data: default
+  - model: default
+  - evaluation: default
+  - sagemaker: default
