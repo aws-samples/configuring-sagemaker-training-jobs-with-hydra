@@ -26,7 +26,7 @@ With this artifact developers can use the same workflow, irrespective of whether
 It's about making the process more manageable, so developers can focus on the work that matters.
 
 ## Sample Use Case
-To demonstrate the capabilities of Hydra in combination with Amazon SageMaker, we are using a [Poisson Regression use case](https://scikit-learn.org/stable/auto_examples/linear_model/plot_poisson_regression_non_normal_loss.html#sphx-glr-auto-examples-linear-model-plot-poisson-regression-non-normal-loss-py) as an example.
+To demonstrate the capabilities of this workflow supported by Hydra, we are using a [Poisson Regression use case](https://scikit-learn.org/stable/auto_examples/linear_model/plot_poisson_regression_non_normal_loss.html#sphx-glr-auto-examples-linear-model-plot-poisson-regression-non-normal-loss-py) as an example.
 Poisson regression is used for analyzing count data, where the outcome variable represents the number of occurrences of a particular event within a fixed unit of observation.
 In the sample our goal is to predict the expected frequency of claims following car accidents for a new policyholder given the historical data over a population of policyholders.
 
@@ -41,13 +41,17 @@ The following diagram depicts the architecture of the solution. All details are 
 
 ![Solution Architecture](./media/architecture.drawio.svg)
 
-1. The Data Scientist builds and pushes the docker image to the Amazon ECR repository `hydra-sm-artifact`.
-2. The Data Scientist either runs the script [start_sagemaker_training_job.py](/scripts/start_sagemaker_training_job.py) or [start_sagemaker_hpo_job.py](/scripts/start_sagemaker_hpo_job.py) which initiates the SageMaker training job. For the regular training job, the adjusted config gets written to the Amazon S3 bucket `hydra-sample-config`. For the HPO job, the default configuration set in the config folder is applied.
-3. The SageMaker job pulls the docker image reads the input data from the data bucket and either fetches the config from the config bucket or uses the default config. After the training, the job saves the output data to the Amazon S3 bucket `hydra-sample-data`.
+1. The Data Scientist can iterate over the algorithm at small scale in a local environment, adjust parameters and test the training script rapidly without the need for Docker or SageMaker (see "Run Locally" section in Epics)
+
+2. Once happy with the algorithm, the Data Scientist builds and pushes the docker image to the Amazon ECR repository *hydra-sm-artifact*.
+
+3. The Data Scientist either runs the script [start_sagemaker_training_job.py](/scripts/start_sagemaker_training_job.py) or [start_sagemaker_hpo_job.py](/scripts/start_sagemaker_hpo_job.py) which initiates the SageMaker training job. For the regular training job, the adjusted config gets written to the Amazon S3 bucket *hydra-sample-config*. For the HPO job, the default configuration set in the config folder is applied.
+
+4. The SageMaker job pulls the docker image reads the input data from the data bucket and either fetches the config from the config bucket or uses the default config. After the training, the job saves the output data to the Amazon S3 bucket *hydra-sample-data*.
 
 # Setup
 
-In this section we describe how you can setup the sample solution. Note that this also includes instructions to set up the basic AWS resources (e.g. SageMaker role, S3 bucket,...). Setting them up is optional as may wish to use your existing resources. Moreover, the repository uses pre-commits hooks (see `.pre-commit-config.yaml`) to facilitate high code quality. It is also not part of the core solution.
+In this section we describe how you can setup the sample solution. Note that this also includes instructions to set up the basic AWS resources (e.g. SageMaker role, S3 bucket,...). Setting them up is optional as you may wish to use your existing resources. Moreover, the repository uses pre-commits hooks (see [.pre-commit-config.yaml](/.pre-commit-config.yaml)) to facilitate high code quality. It is also not part of the core solution.
 
 ## Requirements
 
