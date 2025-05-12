@@ -18,7 +18,7 @@ logging.basicConfig(level=logging.INFO)
 
 @hydra.main(version_base=None, config_path=str(config_path), config_name="config")
 def main(cfg):
-    """Run loading list creation."""
+    """Main harness to train the model."""
     logging.info(f"Loading data set from {cfg.data.train_data_path}.")
     df = pd.read_csv(cfg.data.train_data_path)
 
